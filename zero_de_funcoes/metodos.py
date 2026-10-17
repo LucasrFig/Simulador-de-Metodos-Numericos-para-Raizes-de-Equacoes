@@ -1,7 +1,7 @@
 import time
 import sympy as sp
 
-# AUXILIARES
+# FUNÇÕES AUXILIARES 
 def criar_expressao(texto):
     x = sp.Symbol('x')
     expressao = sp.sympify(texto)
@@ -12,12 +12,12 @@ def pegar_derivada(expressao):
     derivada = sp.diff(expressao,x)
     return derivada
 
-# METODO DA BISSECCAO
+# MÉTODO DA BISSECÇÃO
 def metodo_bisseccao(f, limiteA, limiteB, tolerancia, limite_iteracoes):
 
     inicio = time.perf_counter()
 
-    # Validacao dos parametros
+    # Validação dos parâmetros
     if tolerancia <= 0:
         raise ValueError("A tolerancia deve ser positiva.")
 
@@ -35,7 +35,7 @@ def metodo_bisseccao(f, limiteA, limiteB, tolerancia, limite_iteracoes):
     convergiu = False
     status = "Limite de iteracoes atingido"
 
-    # Verifica se uma extremidade ja e uma raiz
+    # Verifica se uma extremidade já é uma raíz
     if fa == 0:
         raiz = limiteA
         convergiu = True
@@ -51,16 +51,16 @@ def metodo_bisseccao(f, limiteA, limiteB, tolerancia, limite_iteracoes):
         raise ValueError("O intervalo nao apresenta mudanca de sinal.")
 
     else:
-        # Loop principal da bisseccao
+        # Loop principal da bissecção
         for i in range(1, limite_iteracoes + 1):
             iteracoes = i
 
-            # Calcula o ponto medio
+            # Calcula o ponto médio
             raiz = (limiteA + limiteB) / 2
 
             fr = f(raiz)
 
-            # Verifica a convergencia pelo residuo
+            # Verifica a convergÊncia pelo resíduo
             if abs(fr) <= tolerancia:
                 convergiu = True
                 status = "Convergencia pelo residuo"
@@ -74,7 +74,7 @@ def metodo_bisseccao(f, limiteA, limiteB, tolerancia, limite_iteracoes):
                 limiteA = raiz
                 fa = fr
 
-    # Calcula o residuo final
+    # Calcula o resíduo final
     residuo = abs(f(raiz)) if raiz is not None else None
 
     fim = time.perf_counter()
@@ -94,7 +94,7 @@ def metodo_falsa_pos(f, limiteA, limiteB, tolerancia, limite_iteracoes):
 
     inicio = time.perf_counter()
 
-    # Validacao dos parametros
+    # Validação dos parâmetros
     if tolerancia <= 0:
         raise ValueError("A tolerancia deve ser positiva.")
 
@@ -112,7 +112,7 @@ def metodo_falsa_pos(f, limiteA, limiteB, tolerancia, limite_iteracoes):
     convergiu = False
     status = "Limite de iteracoes atingido"
 
-    # Verifica se uma extremidade ja e uma raiz
+    # Verifica se uma extremidade já é uma raíz
     if fa == 0:
         raiz = limiteA
         convergiu = True
@@ -130,7 +130,7 @@ def metodo_falsa_pos(f, limiteA, limiteB, tolerancia, limite_iteracoes):
         )
 
     else:
-        # Loop principal da falsa posicao
+        # Loop principal da falsa posição
         for i in range(1, limite_iteracoes + 1):
             iteracoes = i
 
@@ -141,12 +141,12 @@ def metodo_falsa_pos(f, limiteA, limiteB, tolerancia, limite_iteracoes):
                     "Denominador nulo no metodo da falsa posicao."
                 )
 
-            # Calcula a nova aproximacao
+            # Calcula a nova aproximação
             raiz = (limiteA * fb - limiteB * fa) / denominador
 
             fr = f(raiz)
 
-            # Verifica a convergencia pelo residuo
+            # Verifica a convergência pelo resíduo
             if abs(fr) <= tolerancia:
                 convergiu = True
                 status = "Convergencia pelo residuo"
@@ -160,7 +160,7 @@ def metodo_falsa_pos(f, limiteA, limiteB, tolerancia, limite_iteracoes):
                 limiteA = raiz
                 fa = fr
 
-    # Calcula o residuo final
+    # Calcula o resíduo final
     residuo = abs(f(raiz)) if raiz is not None else None
 
     fim = time.perf_counter()
@@ -175,12 +175,12 @@ def metodo_falsa_pos(f, limiteA, limiteB, tolerancia, limite_iteracoes):
         "status": status
     }
 
-# METODO newton-Raphson:
+# MéTODO newton-Raphson:
 def metodo_newton_raphson(f, df, x0, tolerancia, limite_iteracoes):
 
     inicio = time.perf_counter()
 
-    # Validacao dos parametros
+    # Validação dos parâmetros
     if tolerancia <= 0:
         raise ValueError("A tolerancia deve ser positiva.")
 
@@ -192,7 +192,7 @@ def metodo_newton_raphson(f, df, x0, tolerancia, limite_iteracoes):
     convergiu = False
     status = "Limite de iteracoes atingido"
 
-    # Verifica se o chute inicial ja e uma raiz
+    # Verifica se o chute inicial já é uma raíz
     if abs(f(raiz)) <= tolerancia:
         convergiu = True
         status = "Convergencia pelo residuo"
@@ -208,12 +208,12 @@ def metodo_newton_raphson(f, df, x0, tolerancia, limite_iteracoes):
                     "Derivada nula no metodo de Newton-Raphson."
                 )
 
-            # Calcula a proxima aproximacao
+            # Calcula a próxima aproximação
             nova_raiz = raiz - f(raiz) / derivada
 
             raiz = nova_raiz
 
-            # Verifica a convergencia pelo residuo
+            # Verifica a convergência pelo resíduo
             if abs(f(raiz)) <= tolerancia:
                 convergiu = True
                 status = "Convergencia pelo residuo"
@@ -233,12 +233,12 @@ def metodo_newton_raphson(f, df, x0, tolerancia, limite_iteracoes):
         "status": status
     }
 
-# METODO DA SECANTE
+# MÉTODO DA SECANTE
 def metodo_secante(f, x0, x1, tolerancia, limite_iteracoes):
 
     inicio = time.perf_counter()
 
-    # Validacao dos parametros
+    # Validação dos parâmetros
     if tolerancia <= 0:
         raise ValueError("A tolerancia deve ser positiva.")
 
@@ -253,7 +253,7 @@ def metodo_secante(f, x0, x1, tolerancia, limite_iteracoes):
     f0 = f(x0)
     f1 = f(x1)
 
-    # Verifica se alguma estimativa inicial ja e raiz
+    # Verifica se alguma estimativa inicial já é raíz
     if abs(f0) <= tolerancia:
         raiz = x0
         convergiu = True
@@ -275,26 +275,26 @@ def metodo_secante(f, x0, x1, tolerancia, limite_iteracoes):
                     "Denominador nulo no metodo da secante."
                 )
 
-            # Formula apresentada no slide
+            # Fórmula calcular o próximo X
             x2 = (x0 * f1 - x1 * f0) / denominador
 
             f2 = f(x2)
 
-            # Criterio de parada pelo residuo
+            # Criterio de parada pelo resíduo
             if abs(f2) <= tolerancia:
                 raiz = x2
                 convergiu = True
                 status = "Convergencia pelo residuo"
                 break
 
-            # Criterio de parada pelo erro relativo
+            # Critério de parada pelo erro relativo
             if x2 != 0 and abs((x2 - x1) / x2) <= tolerancia:
                 raiz = x2
                 convergiu = True
                 status = "Convergencia pelo erro relativo"
                 break
 
-            # Atualiza as aproximacoes para a proxima iteracao
+            # Atualiza as aproximacões para a proxima iteração
             x0 = x1
             f0 = f1
 
@@ -303,7 +303,7 @@ def metodo_secante(f, x0, x1, tolerancia, limite_iteracoes):
 
             raiz = x2
 
-    # Calcula o residuo final
+    # Calcula o resíduo final
     residuo = abs(f(raiz)) if raiz is not None else None
 
     fim = time.perf_counter()
@@ -319,7 +319,7 @@ def metodo_secante(f, x0, x1, tolerancia, limite_iteracoes):
     }
 
 
-# EXECUCAO DOS METODOS
+# EXECUCAO DOS MÉTODOS
 
 def executar_metodos(
     texto_funcao,
